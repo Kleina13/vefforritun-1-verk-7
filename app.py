@@ -2,51 +2,21 @@
 
 from os import urandom
 from flask import Flask, render_template as rend, session, request, url_for
-from requests import get
+from pymysql import *
 
 app = Flask(__name__)
 app.secret_key = urandom(13)
 
-with get('https://apis.is/petrol') as response:
-	if response:
-		print(' * API Succesfully loaded', response)
-		data = response.json()['results']
-		timestamp = response.json()['timestampPriceChanges'][:10]
-	else:
-		print(' * API error', response)
-		exit()
-
-stations = []
-for station in data:
-    if station['company'] not in stations:
-        stations.append(station['company'])
-
-low_bensin = data[0]
-low_disel = data[0]
-for station in data:
-	if station['bensin95'] < low_bensin['bensin95']:
-		low_bensin = station
-	else: pass
-	if station['diesel'] < low_disel['diesel']:
-		low_disel = station
-	else: pass
-
+conn = connect(host='tsuts.tskoli.is', port=3306, user='2208022210', password='mypassword', database='2208022210_...')
 	
 @app.route('/')
 def index():
-	return rend('index.html', stations=stations, timestamp=timestamp, data=data, low_bensin=low_bensin, low_disel=low_disel)
+	with conn.cursor() as cursor:
+		cursor.execute("SELECT * FROM album")    
+		album = cur.fetchall()
 
-@app.route('/company/<name>')
-def company(name):
-	return rend('company.html', name=name, data=data, timestamp=timestamp, low_bensin=low_bensin, low_disel=low_disel)
+	return album
 
-@app.route('/station/<key>')
-def gas_station(key):
-	for x in data:
-		if x['key'] == key:
-			station = x
-			break
-	return rend('station.html', key=key, data=data, station=station, timestamp=timestamp, low_bensin=low_bensin, low_disel=low_disel)
 
 
 # error <<<<<<<<<<<
