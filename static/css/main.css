@@ -1,0 +1,112 @@
+body, html {
+    margin: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #808080;
+}
+
+/* #fffb00
+   #22ffc8 */
+
+:root {
+    --main-color: #22ffc8;
+    --main-text-color: #000000;
+    --main-text-color-alt: #ffffff;
+}
+
+a {
+    color: var(--main-color);
+}
+
+h1 {
+    color: var(--main-color);
+}
+
+a:visited {
+    color: var(--main-color);
+}
+
+.center_text {
+    text-align: center;
+}
+
+.error {
+    color: var(--main-color);
+    margin-top: 15%;
+    font-size: 80px;
+    margin-bottom: 15px;
+}
+
+.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.container {
+    padding: 50px 0;
+    margin: 20px 25%;
+    border: solid 3px var(--main-color);
+    border-radius: 20px;;
+    background-color: var(--main-text-color-alt);
+}
+
+img {
+    transition: .7s;
+}
+
+.container:hover img{
+    transform: scale(1.5);
+}
+
+.border {
+    border: var(--main-color) solid 2px;
+    border-radius: 20px;
+    width: 500px;
+    padding-bottom: 20px; 
+}
+
+#stations {
+    border-collapse: collapse;
+    width: 80%;
+}
+  
+#stations td, #stations th {
+    border: 1px solid #5d5d5d;
+    padding: 8px;
+}
+
+#stations tr {
+    color: var(--main-text-color-alt);
+}
+  
+#stations tr:nth-child(even){background-color: #666666;}
+  
+#stations tr:hover {background-color: #5d5d5d;}
+  
+#stations th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--main-color);
+    color: var(--main-text-color);
+}
+
+#lol {color: #696969;}
+
+nav div{
+    border: var(--main-color);
+}
+
+footer {
+    margin-top: 5em;
+    background-color: #696969;
+    padding: 15px 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: var(--main-text-color-alt);
+    text-align: center;
+    border-top: var(--main-color) 2px dotted;
+}
