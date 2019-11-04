@@ -1,21 +1,19 @@
 # APP
 
-from os import urandom
-from flask import Flask, render_template as rend, session, request, url_for
+from flask import Flask, render_template as rend, url_for
 from pymysql import *
 
 app = Flask(__name__)
-app.secret_key = urandom(13)
 
 conn = connect(host='tsuts.tskoli.is', port=3306, user='2208022210', password='mypassword', database='2208022210_...')
 	
 @app.route('/')
 def index():
 	with conn.cursor() as cursor:
-		cursor.execute("SELECT * FROM album")    
-		album = cur.fetchall()
+		cursor.execute("SELECT * FROM user")    
+		album = cursor.fetchall()
 
-	return album
+	return str(album)
 
 
 
