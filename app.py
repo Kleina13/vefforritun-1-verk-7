@@ -7,19 +7,17 @@ from pymysql import *
 app = Flask(__name__)
 app.secret_key = urandom(13)
 
-connection = connect(host='tsuts.tskoli.is', port=3306, user='2208022210', password='mypassword', database='2208022210_...')
+connection = connect(host='tsuts.tskoli.is', port=3306, user='2208022210', password='mypassword', database='2208022210_...', autocommit=True)
 	
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT * FROM user")    
+		cursor.execute("SELECT * FROM user") 
 		users = cursor.fetchall()
 
 	if 'user' in session:
-		logged_in = True
 		user = session['user']
 	else: 
-		logged_in = False
 		user = {"username":"none", "password":"none", "name":"none"}
 
 	return rend('index.html', user=user)
@@ -51,10 +49,20 @@ def new_user():
 	if request.method == 'POST':
 		with connection.cursor() as cursor:
 			cursor.execute(f"""INSERT INTO User (user, pass, nafn) VALUES
-    						   ('{request.form['username']}', '{request.form['password']}', '{request.form['name']}');""")    
+    						   ('{request.form['username']}', '{request.form['password']}', '{request.form['name']}');""")
 		return redirect(url_for('login'))
 
 	return rend('new_user.html')
+
+
+@app.route('/profile')
+def profile():
+	if 'user' in session:
+		user = session['user']
+	else:
+		return redirect(url_for('login'))
+
+	return rend('profile.html', user=user)
 
 
 # error <<<<<<<<<<<
