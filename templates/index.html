@@ -1,16 +1,11 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div class="center_text">
-        <h1 class="center_text">{% block title %}Bensín stöðvar{% endblock %}</h1>
-        <nav>
-            {% for station in stations %}
-            <a href="/company/{{ station }}">
-                <div class="container">
-                    <img src="{{ url_for('static', filename='img/'+station+'.jpg') }}" height="130px" title="{{ station }}" alt="{{ station }}">
-                </div>
-            </a>
-            {% endfor %}
-        </nav>
-    </div>
+    {% if user['name'] == "none" %}
+        <h3>you are logged in as {{ user['username'] }}</h3>
+        <a href="/logout">Log out</a>
+    {% else %}
+        <a href="/login">login</a>
+        <a href="/newuser">Create a new user</a>
+    {% endif %}
 {% endblock %}

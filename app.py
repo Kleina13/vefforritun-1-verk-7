@@ -1,20 +1,60 @@
 # APP
 
-from flask import Flask, render_template as rend, url_for
+from os import urandom
+from flask import Flask, render_template as rend, url_for, request, session, redirect
 from pymysql import *
 
 app = Flask(__name__)
+app.secret_key = urandom(13)
 
-conn = connect(host='tsuts.tskoli.is', port=3306, user='2208022210', password='mypassword', database='2208022210_...')
+connection = connect(host='tsuts.tskoli.is', port=3306, user='2208022210', password='mypassword', database='2208022210_...')
 	
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-	with conn.cursor() as cursor:
+	with connection.cursor() as cursor:
 		cursor.execute("SELECT * FROM user")    
-		album = cursor.fetchall()
+		users = cursor.fetchall()
 
-	return str(album)
+	if 'user' in session:
+		logged_in = True
+		user = session['user']
+	else: 
+		logged_in = False
+		user = {"username":"none", "password":"none", "name":"none"}
 
+	return rend('index.html', user=user)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+	r = request.form
+
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT * FROM user")    
+		users = cursor.fetchall()
+
+	if request.method == 'POST':
+		for u in users:
+			if r['username'] == u[0]:
+				if r['password'] == u[1]:
+					session['user'] = {"username":u[0], "password":u[1], "name":u[2]}
+					return redirect(url_for('index'))
+
+	return rend('login.html')
+
+@app.route('/logout')
+def logout():
+	session.pop('user')
+	return redirect(url_for('index'))
+
+@app.route('/newuser', methods=['GET', 'POST'])
+def new_user():
+	if request.method == 'POST':
+		with connection.cursor() as cursor:
+			cursor.execute(f"""INSERT INTO User (user, pass, nafn) VALUES
+    						   ('{request.form['username']}', '{request.form['password']}', '{request.form['name']}');""")    
+		return redirect(url_for('login'))
+
+	return rend('new_user.html')
 
 
 # error <<<<<<<<<<<
