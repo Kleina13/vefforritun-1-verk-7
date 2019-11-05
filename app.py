@@ -26,6 +26,9 @@ def index():
 def login():
 	r = request.form
 
+	if 'user' in session:
+		return redirect(url_for('index'))
+
 	with connection.cursor() as cursor:
 		cursor.execute("SELECT * FROM user")    
 		users = cursor.fetchall()
@@ -41,7 +44,8 @@ def login():
 
 @app.route('/logout')
 def logout():
-	session.pop('user')
+	if 'user' in session:
+		session.pop('user')
 	return redirect(url_for('index'))
 
 @app.route('/newuser', methods=['GET', 'POST'])
