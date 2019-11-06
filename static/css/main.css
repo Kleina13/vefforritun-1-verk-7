@@ -15,6 +15,7 @@ body {
     --main-color: #00ff00;
     --main-text-color: #000000;
     --main-text-color-alt: #ffffff;
+    --shadow-blur: 4px;
 }
 
 a {
@@ -146,6 +147,14 @@ input[type=text], input[type=password], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    transition: box-shadow .3s;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    box-shadow: 2px 2px var(--shadow-blur) var(--main-color), 
+                -2px 2px var(--shadow-blur) var(--main-color), 
+                2px -2px var(--shadow-blur)  var(--main-color), 
+                -2px -2px var(--shadow-blur)  var(--main-color);
 }
   
 input[type=submit] {

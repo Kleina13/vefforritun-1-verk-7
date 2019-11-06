@@ -12,7 +12,7 @@ connection = connect(host='tsuts.tskoli.is', port=3306, user='2208022210', passw
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT * FROM user") 
+		cursor.execute("SELECT * FROM user")
 		users = cursor.fetchall()
 
 	if 'user' in session:
