@@ -25,6 +25,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	r = request.form
+	error = False
 
 	if 'user' in session:
 		return redirect(url_for('index'))
@@ -34,13 +35,14 @@ def login():
 		users = cursor.fetchall()
 
 	if request.method == 'POST':
+		error = True
 		for u in users:
 			if r['username'] == u[0]:
 				if r['password'] == u[1]:
 					session['user'] = {"username":u[0], "password":u[1], "name":u[2]}
 					return redirect(url_for('index'))
 
-	return rend('login.html')
+	return rend('login.html', error=error)
 
 @app.route('/logout')
 def logout():
@@ -50,13 +52,27 @@ def logout():
 
 @app.route('/newuser', methods=['GET', 'POST'])
 def new_user():
+	r = request.form
+	error = False
+
+	if 'user' in session:
+		return redirect(url_for('index'))
+
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT * FROM user")
+		users = cursor.fetchall()
+
 	if request.method == 'POST':
+		for u in users:
+			if u[0] == r['username']:
+				return rend('new_user.html', error=True)
+
 		with connection.cursor() as cursor:
 			cursor.execute(f"""INSERT INTO User (user, pass, nafn) VALUES
     						   ('{request.form['username']}', '{request.form['password']}', '{request.form['name']}');""")
 		return redirect(url_for('login'))
 
-	return rend('new_user.html')
+	return rend('new_user.html', error=error)
 
 
 @app.route('/profile')

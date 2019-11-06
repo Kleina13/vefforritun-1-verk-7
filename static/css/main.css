@@ -158,14 +158,15 @@ input[type=submit] {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    box-shadow: #696969 0 4px 0 0;
 }
   
-input[type=submit]:hover {
-    box-shadow: #696969 2px 2px 0 0;
+input[type=submit]:active {
+    box-shadow: #4d4d4d 0 2px 0 0;
+    transform: translateY(2px);
 }
 
 input[type=submit]:focus {
-    box-shadow: none;
     outline: none;
 }
 
@@ -180,14 +181,15 @@ input[type=submit]:focus {
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
+    box-shadow: #696969 0 4px 0 0;
 }
 
-.button:hover {
-    box-shadow: #696969 2px 2px 0 0;
+.button:active {
+    box-shadow: #4d4d4d 0 2px 0 0;
+    transform: translateY(2px) translateX(0);
 }
 
 .button:focus {
-    box-shadow: none;
     outline: none;
 }
 

@@ -8,5 +8,10 @@
          <p><input type="text" name="password" minlength="4" placeholder="Password" required></p>
          <p><input type="submit" value="Create User"></p>
       </form>
+      {% if error == True %}
+         <p style="color:#ff0000;">That username is already taken</p>
+      {% else %}
+         <p style="color:#ffffff">_</p>
+      {% endif %}
    </div>
 {% endblock %}

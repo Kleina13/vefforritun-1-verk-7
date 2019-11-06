@@ -7,5 +7,10 @@
          <p><input type="password" name="password" minlength="4" placeholder="••••" required><p>
          <p><input type="submit" value="Login"></p>
       </form>
+      {% if error == True %}
+         <p style="color:#ff0000;">Password or username are incorrect</p>
+      {% else %}
+         <p style="color:#ffffff">_</p>
+      {% endif %}
    </div>
 {% endblock %}
