@@ -31,7 +31,7 @@ def login():
 		return redirect(url_for('index'))
 
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT * FROM user")    
+		cursor.execute("SELECT * FROM user")
 		users = cursor.fetchall()
 
 	if request.method == 'POST':
