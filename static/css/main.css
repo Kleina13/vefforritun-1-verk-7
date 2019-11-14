@@ -178,8 +178,8 @@ input[type=submit] {
   
 input[type=submit]:active {
     box-shadow: #4d4d4d 0 2px 0 0;
-    -webkit-box-shadow: #696969 0 4px 0 0;
-    transform: translateY(2px);
+    -webkit-box-shadow: #696969 0 2px 0 0;
+    transform: translateY(2px) translateX(0);
 }
 
 input[type=submit]:focus {
