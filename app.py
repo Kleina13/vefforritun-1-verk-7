@@ -27,7 +27,7 @@ def login():
 	r = request.form
 	error = False
 
-	if 'user' in session:
+	if 'user' in session: 
 		return redirect(url_for('index'))
 
 	with connection.cursor() as cursor:
